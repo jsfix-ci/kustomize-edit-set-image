@@ -1,6 +1,6 @@
 {
   "name": "kustomize-edit-set-image",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./dist/index.js",
   "bin": {
     "kustomize-edit-set-image": "./dist/index.js"

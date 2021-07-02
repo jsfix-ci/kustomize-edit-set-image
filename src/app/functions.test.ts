@@ -3,26 +3,27 @@ import { setImageInKustomizeViaCli } from './functions';
 
 const cases = [
   [
-    'Update existing image in kustomization.yaml correctly',
+    'should update existing image in kustomization.yaml correctly',
     './resources/test-resources/test-1.kustomization.yaml',
     './resources/test-resources/test-1.expected.kustomization.yaml',
     'mongo:4.1.0',
   ],
   [
-    'Update existing image in kustomization.yaml correctly and do not touch other images',
+    'should update existing image in kustomization.yaml correctly and do not touch other images',
     './resources/test-resources/test-2.kustomization.yaml',
     './resources/test-resources/test-2.expected.kustomization.yaml',
     'rabbitmq:1.0.0',
   ],
   [
-    'Creating new images section in kustomization.yaml correctly if not exists',
+    'should create new images object in kustomization.yaml correctly if not exists',
     './resources/test-resources/test-3.kustomization.yaml',
     './resources/test-resources/test-3.expected.kustomization.yaml',
     'mongo:4.1.0',
   ],
 ];
 
-describe('Generated corrected kustomization.yaml', function() {
+describe('setImageInKustomizeViaCli', function() {
+
   test.each(cases)(
     '%p',
     (_, sourcePath, expectedResultPath, setImageDirective) => {
@@ -36,5 +37,10 @@ describe('Generated corrected kustomization.yaml', function() {
       )
     }
   );
+
+  test('should throw error if kustomization file not exists', function() {
+    const t = () => setImageInKustomizeViaCli('mongo:4.1.0', './storage/test-not-exists-workspace')
+    expect(t).toThrowError()
+  })
 
 })

@@ -62,12 +62,9 @@ export function setImageInKustomize(
 }
 
 export function setImageInKustomizeViaCli (
-  newImageDirective: string | undefined,
+  newImageDirective: string,
   kustomizationContextPath: string | undefined
 ) {
-  if (!newImageDirective) {
-    throw new Error('Invalid directive');
-  }
   const newImage = parseSetImageDirective(newImageDirective);
 
   var kustomizationFilePath = resolve('./kustomization.yaml');

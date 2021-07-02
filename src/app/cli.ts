@@ -5,7 +5,7 @@ export function handleCli() {
   const program = new Command()
 
   program
-    .version('0.1.0')
+    .version('0.1.1')
     .description('Add or update image in kustomize.yaml')
     .argument('<image>', 'Set image directive in image:version')
     .option('-C, --context [context]', 'Kustomization root path, that kustomization.yaml exists', '.')
