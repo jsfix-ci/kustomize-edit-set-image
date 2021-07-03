@@ -1,11 +1,11 @@
 import { Image } from './types';
 
-function splitFirstPartsAndNewTag(directive: string): [string, string | null] {
+function splitFirstPartsAndNewTag(directive: string): [string, string | undefined] {
   const lastIndexOfColon = directive.lastIndexOf(':');
   const lastIndexOfAt = directive.lastIndexOf('@');
 
   if (lastIndexOfColon < 0 && lastIndexOfAt < 0) {
-    return [directive, null];
+    return [directive, undefined];
   }
 
   if (lastIndexOfAt > 0) {
@@ -25,11 +25,11 @@ function splitFirstPartsAndNewTag(directive: string): [string, string | null] {
   throw new Error('Invalid set image format. Unexpected image newTag');
 }
 
-function splitImageAndNewImage(directiveWithoutNewTag: string): [string, string | null] {
+function splitImageAndNewImage(directiveWithoutNewTag: string): [string, string | undefined] {
   const names = directiveWithoutNewTag.split('=');
 
   if (names.length === 1) {
-    return [names[0], null];
+    return [names[0], undefined];
   }
 
   if (names.length === 2) {
@@ -40,9 +40,12 @@ function splitImageAndNewImage(directiveWithoutNewTag: string): [string, string 
 }
 
 export function parseSetImageDirective(directive: string): Image {
-  let name, newName, newTag;
+  let name: string;
+  let newName: string | undefined;
+  let newTag: string | undefined;
+
   try {
-    let firstParts;
+    let firstParts: string;
 
     [firstParts, newTag] = splitFirstPartsAndNewTag(directive);
     [name, newName] = splitImageAndNewImage(firstParts);

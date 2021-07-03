@@ -2,7 +2,7 @@
 
 [![Node.js CI](https://github.com/inoxth/kustomize-edit-set-image/actions/workflows/node.js.yml/badge.svg)](https://github.com/inoxth/kustomize-edit-set-image/actions/workflows/node.js.yml)
 
-Replacement of `kustomize edit set image` that can be used with older kustomize versions.
+Replacement of `kustomize edit set image` that can be used with older kubect/kustomize versions.
 
 ## How it works
 

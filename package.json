@@ -1,7 +1,7 @@
 {
   "name": "kustomize-edit-set-image",
   "version": "0.1.2",
-  "description": "Add or update image in kustomize.yaml",
+  "description": "Replacement of `kustomize edit set image` that can be used with older kubect/kustomize versions",
   "main": "./dist/index.js",
   "bin": {
     "kustomize-edit-set-image": "./dist/index.js"
