@@ -3,6 +3,9 @@ node_modules/
 resources/
 storage/
 .editorconfig
+.eslingignore
+.eslintrc.js
 .github
 *.test.ts
 *.test.js
+jest.config.js

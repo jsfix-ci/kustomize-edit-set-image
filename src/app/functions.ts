@@ -1,19 +1,19 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import YAML from 'yaml';
-import { Image } from './types';
-import { parseSetImageDirective } from './directives'
+import { Kustomization, Image } from './types';
+import { parseSetImageDirective } from './directives';
 
 export { Image } from './types';
 
 function makeImagesWithUpdatedImage(
-  images: Image[],
-  updatedImage: Image
+  images: Image[] | undefined,
+  updatedImage: Image,
 ): Image[] {
-  images = images || Array<Image>();
+  const existingImages = images || Array<Image>();
 
-  const { newImages, matchedImageUpdated } = images.reduce(
-    function(context, image) {
+  const { newImages, matchedImageUpdated } = existingImages.reduce(
+    (context, image) => {
       if (image.name === updatedImage.name) {
         context.newImages.push(updatedImage);
         context.matchedImageUpdated = true;
@@ -29,25 +29,25 @@ function makeImagesWithUpdatedImage(
   );
 
   if (!matchedImageUpdated) {
-    newImages.push(updatedImage)
+    newImages.push(updatedImage);
   }
 
-  return newImages
+  return newImages;
 }
 
 export function setImageInKustomize(
   newImage: Image,
   kustomizationFilePath: string,
-) {
+): void {
   const kustomizeFullFilePath = resolve(kustomizationFilePath);
   const kustomizeString = readFileSync(kustomizeFullFilePath, 'utf8');
 
-  const kustomizeObject: any = YAML.parse(kustomizeString)
+  const kustomizeObject: Kustomization = YAML.parse(kustomizeString);
   const updatedKustomizeObject = {
     ...kustomizeObject,
     images: makeImagesWithUpdatedImage(
       kustomizeObject.images,
-      newImage
+      newImage,
     ),
   };
 
@@ -61,19 +61,19 @@ export function setImageInKustomize(
   );
 }
 
-export function setImageInKustomizeViaCli (
+export function setImageInKustomizeViaCli(
   newImageDirective: string,
-  kustomizationContextPath: string | undefined
-) {
+  kustomizationContextPath: string | undefined,
+): void {
   const newImage = parseSetImageDirective(newImageDirective);
 
-  var kustomizationFilePath = resolve('./kustomization.yaml');
+  let kustomizationFilePath = resolve('./kustomization.yaml');
   if (kustomizationContextPath) {
-    kustomizationFilePath = resolve(`${kustomizationContextPath}/kustomization.yaml`)
+    kustomizationFilePath = resolve(`${kustomizationContextPath}/kustomization.yaml`);
   }
 
   if (!existsSync(kustomizationFilePath)) {
-    throw new Error(`Kustomization file path not exists [${kustomizationFilePath}]`)
+    throw new Error(`Kustomization file path not exists [${kustomizationFilePath}]`);
   }
 
   setImageInKustomize(

@@ -22,8 +22,7 @@ const cases = [
   ],
 ];
 
-describe('setImageInKustomizeViaCli', function() {
-
+describe('setImageInKustomizeViaCli', () => {
   test.each(cases)(
     '%p',
     (_, sourcePath, expectedResultPath, setImageDirective) => {
@@ -31,16 +30,15 @@ describe('setImageInKustomizeViaCli', function() {
       setImageInKustomizeViaCli(setImageDirective, './storage/test-workspace');
 
       expect(
-        readFileSync('./storage/test-workspace/kustomization.yaml', 'utf-8')
+        readFileSync('./storage/test-workspace/kustomization.yaml', 'utf-8'),
       ).toEqual(
-        readFileSync(expectedResultPath, 'utf-8')
-      )
-    }
+        readFileSync(expectedResultPath, 'utf-8'),
+      );
+    },
   );
 
-  test('should throw error if kustomization file not exists', function() {
-    const t = () => setImageInKustomizeViaCli('mongo:4.1.0', './storage/test-not-exists-workspace')
-    expect(t).toThrowError()
-  })
-
-})
+  test('should throw error if kustomization file not exists', () => {
+    const t = () => setImageInKustomizeViaCli('mongo:4.1.0', './storage/test-not-exists-workspace');
+    expect(t).toThrowError();
+  });
+});

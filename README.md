@@ -1,6 +1,34 @@
 # kustomize-edit-set-image
 
+[![Node.js CI](https://github.com/inoxth/kustomize-edit-set-image/actions/workflows/node.js.yml/badge.svg)](https://github.com/inoxth/kustomize-edit-set-image/actions/workflows/node.js.yml)
+
 Replacement of `kustomize edit set image` that can be used with older kustomize versions.
+
+## How it works
+
+In the directory that has `kustomization.yaml`:
+
+```
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployments/my-project.yaml
+images:
+  - name: my-group/my-project
+    newTag: 1.0.0
+```
+
+After running `npx kustomize edit set image my-group/my-project:1.0.0` in the directory:
+
+```
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployments/my-project.yaml
+images:
+  - name: my-group/my-project
+    newTag: 1.1.0
+```
 
 ## Usage
 
