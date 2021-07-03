@@ -1,6 +1,6 @@
 {
   "name": "kustomize-edit-set-image",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Replacement of `kustomize edit set image` that can be used with older kubect/kustomize versions",
   "main": "./dist/index.js",
   "bin": {
