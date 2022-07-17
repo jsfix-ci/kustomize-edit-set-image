@@ -16,7 +16,7 @@ export function handleCli(): void {
     .version(process.env.npm_package_version || 'dev')
     .description('Add or update image in kustomize.yaml')
     .argument('<image>', 'Set image directive in image:version')
-    .option('-C, --context [context]', 'Kustomization root path, that kustomization.yaml exists', '.')
+    .option('-C, --context [context]','Kustomization root path, that kustomization.yaml exists').preset('.')
     .action((image: string, options: CommandOption) => {
       try {
         setImageInKustomizeViaCli(image, options.context);
