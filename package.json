@@ -15,7 +15,7 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "commander": "^8.0.0",
+    "commander": "^9.4.0",
     "tslib": "^2.3.0",
     "yaml": "^1.10.2"
   },
